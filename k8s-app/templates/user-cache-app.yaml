@@ -14,11 +14,13 @@ spec:
       labels:
         app: user-cache-app
     spec:
+      initContainers:
+        - name: wait-for-redis
+          image: busybox:1.35
+          command: [ 'sh', '-c', 'until nc -z redis 6379; do echo "Waiting for Redis..."; sleep 2; done;' ]
       containers:
         - name: user-cache-app
-          image: ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:latest
-          #image: user-cache-app:latest
-          #imagePullPolicy: Never
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 5000
           env:
@@ -30,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-cache-app-service
+  name: user-cache-app
 spec:
   type: NodePort
   selector:

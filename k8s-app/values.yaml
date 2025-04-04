@@ -1,0 +1,3 @@
+image:
+  repository: ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app
+  tag: latest
