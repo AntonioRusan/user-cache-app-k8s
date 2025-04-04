@@ -24,10 +24,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/user-cache-app:${{ github.sha }} .
-          docker build -t ghcr.io/${{ github.repository }}/user-cache-app:latest .
+          docker build -t ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:${{ github.sha }} .
+          docker build -t ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:latest .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}/user-cache-app:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository }}/user-cache-app:latest
+          docker push ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:${{ github.sha }}
+          docker push ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:latest
