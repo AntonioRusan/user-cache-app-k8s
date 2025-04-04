@@ -1,0 +1,33 @@
+name: Publish Docker Image to GitHub Packages
+
+on:
+  push:
+    branches:
+      - master
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/user-cache-app:${{ github.sha }} .
+          docker build -t ghcr.io/${{ github.repository }}/user-cache-app:latest .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository }}/user-cache-app:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository }}/user-cache-app:latest
