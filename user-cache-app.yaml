@@ -17,6 +17,8 @@ spec:
       containers:
         - name: user-cache-app
           image: ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:latest
+          #image: user-cache-app:latest
+          #imagePullPolicy: Never
           ports:
             - containerPort: 5000
           env:
