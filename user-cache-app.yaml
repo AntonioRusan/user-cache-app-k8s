@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-cache-app
+  labels:
+    app: user-cache-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-cache-app
+  template:
+    metadata:
+      labels:
+        app: user-cache-app
+    spec:
+      containers:
+        - name: user-cache-app
+          image: user-cache-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "30079"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-cache-app-service
+spec:
+  type: NodePort
+  selector:
+    app: user-cache-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30005
