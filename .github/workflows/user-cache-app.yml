@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:${{ github.sha }} .
+          docker build -t ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:${{ github.sha }} -f ./app/Dockerfile ./app
           docker build -t ghcr.io/antoniorusan/user-cache-app-k8s/user-cache-app:latest .
 
       - name: Push Docker image
